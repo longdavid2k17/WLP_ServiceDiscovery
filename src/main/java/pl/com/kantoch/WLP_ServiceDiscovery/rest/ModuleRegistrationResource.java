@@ -26,6 +26,13 @@ public class ModuleRegistrationResource {
         return moduleEntity;
     }
 
+    @GetMapping("/search")
+    @ApiOperation(value = "Get module configuration")
+    public ModuleEntity getModuleConfiguration(@RequestParam String moduleName) {
+        ModuleEntity moduleEntity = moduleRegistrationService.getModule(moduleName);
+        return moduleEntity;
+    }
+
     @PutMapping
     @ApiOperation(value = "Force module registration")
     public void forceRegistration() {
