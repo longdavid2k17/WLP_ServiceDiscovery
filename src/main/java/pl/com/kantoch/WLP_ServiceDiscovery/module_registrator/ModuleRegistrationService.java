@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import pl.com.kantoch.WLP_ServiceDiscovery.exceptions.ModuleParamDoesNotExistException;
 
 import javax.transaction.Transactional;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 @Service
 public class ModuleRegistrationService {
@@ -18,13 +20,23 @@ public class ModuleRegistrationService {
 
     private final ModuleRepository moduleRepository;
 
-    public ModuleRegistrationService(ModuleRepository moduleRepository) {
-        this.moduleRepository = moduleRepository;
-    }
-
     @Value("${server.port}")
     private String SERVICE_PORT;
     public final static String SERVICE_DISCOVERY_MODULE_NAME = "SERVICE_DISCOVERY_MODULE";
+    private String HOST_ADDRESS;
+
+    public ModuleRegistrationService(ModuleRepository moduleRepository) {
+        this.moduleRepository = moduleRepository;
+        try {
+            initializeHostAddress();
+        } catch (UnknownHostException e) {
+            LOGGER.error("Error occurred during host address property initialization. Class: {}. Message: {}",e.getClass(),e.getMessage());
+        }
+    }
+
+    private void initializeHostAddress() throws UnknownHostException {
+        HOST_ADDRESS = InetAddress.getLocalHost().getHostAddress();
+    }
 
     public ModuleEntity getModule(String moduleName){
         return moduleRepository.findByModuleName(moduleName);
@@ -38,7 +50,7 @@ public class ModuleRegistrationService {
     public void checkServiceDiscoveryRegistrationState(){
         ModuleEntity entity = getModule(SERVICE_DISCOVERY_MODULE_NAME);
         if(entity!=null){
-            entity.setLastActivityDate(new Date());
+            entity.setLastActivityDate(LocalDateTime.now());
             moduleRepository.save(entity);
             LOGGER.warn("Current configuration with ID={} has been updated",entity.getId());
         } else registerServiceDiscoveryModule();
@@ -53,8 +65,9 @@ public class ModuleRegistrationService {
                 moduleRepository.delete(enity);
                 LOGGER.warn("Current configuration with ID={} has been deleted from storage",enity.getId());
             }
+            initializeHostAddress();
             //jego brak
-            moduleRepository.save(buildModuleEntity(new Date()));
+            moduleRepository.save(buildModuleEntity(LocalDateTime.now()));
         }
         catch (Exception e){
             LOGGER.error("ModuleRegistrationService has occurred exception {} with message: {}",e.getClass(),e.getMessage());
@@ -62,7 +75,7 @@ public class ModuleRegistrationService {
     }
 
     @Transactional
-    public String registerModule(String port, String moduleName) throws ModuleParamDoesNotExistException{
+    public String registerModule(String port, String moduleName,String hostAddress) throws ModuleParamDoesNotExistException{
         String message;
         try {
             if(port == null || port.isEmpty() || port.isBlank()) throw new ModuleParamDoesNotExistException("New module have not provided port value provided!");
@@ -74,7 +87,7 @@ public class ModuleRegistrationService {
                 LOGGER.warn("Current configuration with ID={} has been deleted from storage",enity.getId());
             }
             //jego brak
-            moduleRepository.save(buildModuleEntity(moduleName,port,new Date()));
+            moduleRepository.save(buildModuleEntity(moduleName,port, hostAddress, LocalDateTime.now()));
             message = "Module "+moduleName+" has been registered on port "+port;
             LOGGER.info(message);
             return message;
@@ -86,19 +99,21 @@ public class ModuleRegistrationService {
         }
     }
 
-    private ModuleEntity buildModuleEntity(String moduleName, String port, Date date) {
+    private ModuleEntity buildModuleEntity(String moduleName, String port,String hostAddress, LocalDateTime date) {
         return new ModuleEntityBuilder()
                 .moduleName(moduleName)
                 .servicePort(port)
+                .hostAddress(hostAddress)
                 .firstRegistrationDate(date)
                 .lastActivityDate(date)
                 .get();
     }
 
-    private ModuleEntity buildModuleEntity(Date date) {
+    private ModuleEntity buildModuleEntity(LocalDateTime date) {
         return new ModuleEntityBuilder()
                 .moduleName(SERVICE_DISCOVERY_MODULE_NAME)
                 .servicePort(SERVICE_PORT)
+                .hostAddress(HOST_ADDRESS)
                 .firstRegistrationDate(date)
                 .lastActivityDate(date)
                 .get();

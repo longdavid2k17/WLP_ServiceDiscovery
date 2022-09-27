@@ -47,6 +47,6 @@ public class ModuleRegistrationResource {
                 || moduleRequest.getApplicationContext().isEmpty()
                 || !moduleRequest.getApplicationContext().startsWith("WLP_"))
             throw new IllegalStateException("Request has not provided application context value, or was called from unsafe host");
-        return moduleRegistrationService.registerModule(moduleRequest.getServicePort(),moduleRequest.getModuleName());
+        return moduleRegistrationService.registerModule(moduleRequest.getServicePort(),moduleRequest.getModuleName(),moduleRequest.getHostAddress());
     }
 }

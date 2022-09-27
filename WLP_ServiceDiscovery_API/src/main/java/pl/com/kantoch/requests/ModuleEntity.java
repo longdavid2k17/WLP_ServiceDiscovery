@@ -1,27 +1,17 @@
-package pl.com.kantoch.WLP_ServiceDiscovery.payloads;
+package pl.com.kantoch.requests;
 
-public class RegisterModuleRequest {
+public class ModuleEntity {
     private String moduleName;
     private String servicePort;
-    private String applicationContext;
     private String hostAddress;
 
-    public RegisterModuleRequest() {
+    public ModuleEntity() {
     }
 
-    public RegisterModuleRequest(String moduleName, String servicePort, String applicationContext,String hostAddress) {
+    public ModuleEntity(String moduleName, String servicePort, String hostAddress) {
         this.moduleName = moduleName;
         this.servicePort = servicePort;
-        this.applicationContext = applicationContext;
         this.hostAddress = hostAddress;
-    }
-
-    public String getApplicationContext() {
-        return applicationContext;
-    }
-
-    public void setApplicationContext(String applicationContext) {
-        this.applicationContext = applicationContext;
     }
 
     public String getModuleName() {

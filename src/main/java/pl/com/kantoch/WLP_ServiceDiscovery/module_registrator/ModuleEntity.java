@@ -3,6 +3,7 @@ package pl.com.kantoch.WLP_ServiceDiscovery.module_registrator;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,21 +23,27 @@ public class ModuleEntity {
     @Column(name = "service_port")
     private String servicePort;
 
+    @NotEmpty
+    @NotNull
+    @Column(name = "host_address")
+    private String hostAddress;
+
     @NotNull
     @Column(name = "first_registration_date")
-    private Date firstRegistrationDate;
+    private LocalDateTime firstRegistrationDate;
 
     @NotNull
     @Column(name = "last_activity_date")
-    private Date lastActivityDate;
+    private LocalDateTime lastActivityDate;
 
     public ModuleEntity() {
     }
 
-    public ModuleEntity(Long id, String moduleName, String servicePort, Date firstRegistrationDate, Date lastActivityDate) {
+    public ModuleEntity(Long id, String moduleName, String servicePort, String hostAddress, LocalDateTime firstRegistrationDate, LocalDateTime lastActivityDate) {
         this.id = id;
         this.moduleName = moduleName;
         this.servicePort = servicePort;
+        this.hostAddress = hostAddress;
         this.firstRegistrationDate = firstRegistrationDate;
         this.lastActivityDate = lastActivityDate;
     }
@@ -65,28 +72,37 @@ public class ModuleEntity {
         this.servicePort = servicePort;
     }
 
-    public Date getFirstRegistrationDate() {
+    public LocalDateTime getFirstRegistrationDate() {
         return firstRegistrationDate;
     }
 
-    public void setFirstRegistrationDate(Date firstRegistrationDate) {
+    public void setFirstRegistrationDate(LocalDateTime firstRegistrationDate) {
         this.firstRegistrationDate = firstRegistrationDate;
     }
 
-    public Date getLastActivityDate() {
+    public LocalDateTime getLastActivityDate() {
         return lastActivityDate;
     }
 
-    public void setLastActivityDate(Date lastActivityDate) {
+    public void setLastActivityDate(LocalDateTime lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
+    }
+
+    public String getHostAddress() {
+        return hostAddress;
+    }
+
+    public void setHostAddress(String hostAddress) {
+        this.hostAddress = hostAddress;
     }
 
     @Override
     public String toString() {
-        return "ModuleEnity{" +
+        return "ModuleEntity{" +
                 "id=" + id +
                 ", moduleName='" + moduleName + '\'' +
                 ", servicePort='" + servicePort + '\'' +
+                ", hostAddress='" + hostAddress + '\'' +
                 ", firstRegistrationDate=" + firstRegistrationDate +
                 ", lastActivityDate=" + lastActivityDate +
                 '}';
@@ -109,12 +125,17 @@ class ModuleEntityBuilder {
         return this;
     }
 
-    public ModuleEntityBuilder firstRegistrationDate(Date firstRegistrationDate){
+    public ModuleEntityBuilder hostAddress(String hostAddress){
+        this.moduleEntity.setHostAddress(hostAddress);
+        return this;
+    }
+
+    public ModuleEntityBuilder firstRegistrationDate(LocalDateTime firstRegistrationDate){
         this.moduleEntity.setFirstRegistrationDate(firstRegistrationDate);
         return this;
     }
 
-    public ModuleEntityBuilder lastActivityDate(Date lastActivityDate){
+    public ModuleEntityBuilder lastActivityDate(LocalDateTime lastActivityDate){
         this.moduleEntity.setLastActivityDate(lastActivityDate);
         return this;
     }
