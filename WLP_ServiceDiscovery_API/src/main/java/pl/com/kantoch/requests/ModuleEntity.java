@@ -1,5 +1,8 @@
 package pl.com.kantoch.requests;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ModuleEntity {
     private String moduleName;
     private String servicePort;
