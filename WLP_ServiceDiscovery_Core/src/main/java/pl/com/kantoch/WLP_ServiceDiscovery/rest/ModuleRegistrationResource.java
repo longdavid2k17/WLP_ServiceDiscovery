@@ -6,7 +6,7 @@ import pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleEntity;
 import pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleRegistrationService;
 import pl.com.kantoch.WLP_ServiceDiscovery.payloads.RegisterModuleRequest;
 
-import static pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleRegistrationService.SERVICE_DISCOVERY_MODULE_NAME;
+import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_DISCOVERY_MODULE_NAME;
 
 
 @RestController

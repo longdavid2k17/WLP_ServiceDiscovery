@@ -25,6 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<swagger.version>3.0.0</swagger.version>
+		<wlp_tools.version>0.0.1</wlp_tools.version>
 	</properties>
 	<dependencies>
 		<!-- BASIC DEPENDENCIES -->
@@ -76,6 +77,14 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+
+		<!-- OWN DEPENDENCIES -->
+		<dependency>
+			<groupId>pl.com.kantoch</groupId>
+			<artifactId>WLP_Tools</artifactId>
+			<version>${wlp_tools.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

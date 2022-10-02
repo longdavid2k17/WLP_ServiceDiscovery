@@ -1,10 +1,14 @@
 package pl.com.kantoch.WLP_ServiceDiscovery.module_registrator;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import pl.com.kantoch.serialization.LocalDateTimeDeserializer;
+import pl.com.kantoch.serialization.LocalDateTimeSerializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "modules")
@@ -30,10 +34,14 @@ public class ModuleEntity {
 
     @NotNull
     @Column(name = "first_registration_date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime firstRegistrationDate;
 
     @NotNull
     @Column(name = "last_activity_date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastActivityDate;
 
     public ModuleEntity() {

@@ -13,6 +13,8 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_DISCOVERY_MODULE_NAME;
+
 @Service
 public class ModuleRegistrationService {
 
@@ -22,7 +24,6 @@ public class ModuleRegistrationService {
 
     @Value("${server.port}")
     private String SERVICE_PORT;
-    public final static String SERVICE_DISCOVERY_MODULE_NAME = "SERVICE_DISCOVERY_MODULE";
     private String HOST_ADDRESS;
 
     public ModuleRegistrationService(ModuleRepository moduleRepository) {
