@@ -44,6 +44,10 @@ public class ModuleEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastActivityDate;
 
+    private String swaggerUrl;
+
+    private String status;
+
     public ModuleEntity() {
     }
 
@@ -54,6 +58,7 @@ public class ModuleEntity {
         this.hostAddress = hostAddress;
         this.firstRegistrationDate = firstRegistrationDate;
         this.lastActivityDate = lastActivityDate;
+        this.swaggerUrl = buildSwaggerUrl();
     }
 
     public Long getId() {
@@ -102,6 +107,33 @@ public class ModuleEntity {
 
     public void setHostAddress(String hostAddress) {
         this.hostAddress = hostAddress;
+    }
+
+    public String getSwaggerUrl() {
+        return swaggerUrl;
+    }
+
+    public void setSwaggerUrl(String swaggerUrl) {
+        this.swaggerUrl = swaggerUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String buildSwaggerUrl() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("http://")
+                .append(hostAddress)
+                .append(":")
+                .append(servicePort)
+                .append("/")
+                .append("swagger-ui.html");
+        return stringBuilder.toString();
     }
 
     @Override

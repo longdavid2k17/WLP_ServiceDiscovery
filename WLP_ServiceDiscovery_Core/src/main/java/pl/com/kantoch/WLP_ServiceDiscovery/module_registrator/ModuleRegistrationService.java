@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.com.kantoch.WLP_ServiceDiscovery.exceptions.ModuleParamDoesNotExistException;
+import pl.com.kantoch.WLP_ServiceDiscovery.service.ServiceDiscoveryService;
 
 import javax.transaction.Transactional;
 import java.net.InetAddress;
@@ -21,13 +22,15 @@ public class ModuleRegistrationService {
     private final Logger LOGGER = LoggerFactory.getLogger(ModuleRegistrationService.class);
 
     private final ModuleRepository moduleRepository;
+    private final ServiceDiscoveryService serviceDiscoveryService;
 
     @Value("${server.port}")
     private String SERVICE_PORT;
     private String HOST_ADDRESS;
 
-    public ModuleRegistrationService(ModuleRepository moduleRepository) {
+    public ModuleRegistrationService(ModuleRepository moduleRepository, ServiceDiscoveryService serviceDiscoveryService) {
         this.moduleRepository = moduleRepository;
+        this.serviceDiscoveryService = serviceDiscoveryService;
         try {
             initializeHostAddress();
         } catch (UnknownHostException e) {
@@ -44,7 +47,10 @@ public class ModuleRegistrationService {
     }
 
     public Collection<ModuleEntity> getRegisteredModules() {
-        return moduleRepository.findAll();
+        Collection<ModuleEntity> moduleEntityCollection = moduleRepository.findAll();
+        moduleEntityCollection.forEach(e->e.setSwaggerUrl(e.buildSwaggerUrl()));
+        moduleEntityCollection.forEach(e->e.setStatus(serviceDiscoveryService.getServiceStatus(e.getSwaggerUrl())));
+        return moduleEntityCollection;
     }
 
     @Scheduled(fixedRate = 1200000)
