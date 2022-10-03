@@ -44,8 +44,10 @@ public class ModuleEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastActivityDate;
 
+    @Transient
     private String swaggerUrl;
 
+    @Transient
     private String status;
 
     public ModuleEntity() {
