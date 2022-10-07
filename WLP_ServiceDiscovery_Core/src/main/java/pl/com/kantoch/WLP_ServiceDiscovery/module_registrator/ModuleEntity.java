@@ -44,6 +44,11 @@ public class ModuleEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime lastActivityDate;
 
+    @NotNull
+    @NotEmpty
+    @Column(name = "module_version")
+    private String moduleVersion;
+
     @Transient
     private String swaggerUrl;
 
@@ -53,13 +58,14 @@ public class ModuleEntity {
     public ModuleEntity() {
     }
 
-    public ModuleEntity(Long id, String moduleName, String servicePort, String hostAddress, LocalDateTime firstRegistrationDate, LocalDateTime lastActivityDate) {
+    public ModuleEntity(Long id, String moduleName, String servicePort, String hostAddress, LocalDateTime firstRegistrationDate, LocalDateTime lastActivityDate, String moduleVersion) {
         this.id = id;
         this.moduleName = moduleName;
         this.servicePort = servicePort;
         this.hostAddress = hostAddress;
         this.firstRegistrationDate = firstRegistrationDate;
         this.lastActivityDate = lastActivityDate;
+        this.moduleVersion = moduleVersion;
         this.swaggerUrl = buildSwaggerUrl();
     }
 
@@ -127,6 +133,14 @@ public class ModuleEntity {
         this.status = status;
     }
 
+    public String getModuleVersion() {
+        return moduleVersion;
+    }
+
+    public void setModuleVersion(String moduleVersion) {
+        this.moduleVersion = moduleVersion;
+    }
+
     public String buildSwaggerUrl() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("http://")
@@ -152,7 +166,7 @@ public class ModuleEntity {
 }
 
 class ModuleEntityBuilder {
-    ModuleEntity moduleEntity;
+    private final ModuleEntity moduleEntity;
     public ModuleEntityBuilder() {
         this.moduleEntity = new ModuleEntity();
     }
@@ -172,6 +186,11 @@ class ModuleEntityBuilder {
         return this;
     }
 
+    public ModuleEntityBuilder moduleVersion(String moduleVersion){
+        this.moduleEntity.setModuleVersion(moduleVersion);
+        return this;
+    }
+
     public ModuleEntityBuilder firstRegistrationDate(LocalDateTime firstRegistrationDate){
         this.moduleEntity.setFirstRegistrationDate(firstRegistrationDate);
         return this;
@@ -182,7 +201,7 @@ class ModuleEntityBuilder {
         return this;
     }
 
-    public ModuleEntity get() {
+    public ModuleEntity build() {
         return this.moduleEntity;
     }
 }

@@ -3,15 +3,17 @@ package pl.com.kantoch.WLP_ServiceDiscovery.payloads;
 public class RegisterModuleRequest {
     private String moduleName;
     private String servicePort;
+    private String moduleVersion;
     private String applicationContext;
     private String hostAddress;
 
     public RegisterModuleRequest() {
     }
 
-    public RegisterModuleRequest(String moduleName, String servicePort, String applicationContext,String hostAddress) {
+    public RegisterModuleRequest(String moduleName, String servicePort, String moduleVersion, String applicationContext, String hostAddress) {
         this.moduleName = moduleName;
         this.servicePort = servicePort;
+        this.moduleVersion = moduleVersion;
         this.applicationContext = applicationContext;
         this.hostAddress = hostAddress;
     }
@@ -46,5 +48,13 @@ public class RegisterModuleRequest {
 
     public void setHostAddress(String hostAddress) {
         this.hostAddress = hostAddress;
+    }
+
+    public String getModuleVersion() {
+        return moduleVersion;
+    }
+
+    public void setModuleVersion(String moduleVersion) {
+        this.moduleVersion = moduleVersion;
     }
 }
