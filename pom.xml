@@ -28,6 +28,7 @@
 		<wlp_tools.version>0.0.2</wlp_tools.version>
 		<springdoc.version>1.6.4</springdoc.version>
 		<maven-tool.version>3.8.5</maven-tool.version>
+		<junit.version>4.13.2</junit.version>
 	</properties>
 	<dependencies>
 		<!-- BASIC DEPENDENCIES -->
@@ -60,6 +61,15 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
+
+		<!-- TEST DEPENDENCIES -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- DB DEPENDENCIES -->
 		<dependency>
