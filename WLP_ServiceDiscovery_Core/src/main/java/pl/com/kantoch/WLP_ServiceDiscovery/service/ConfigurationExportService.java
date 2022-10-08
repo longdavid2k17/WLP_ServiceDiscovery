@@ -19,7 +19,7 @@ public class ConfigurationExportService {
 
     public String exportModuleConfiguration(String moduleName) throws ModuleDoesNotExistException, JsonProcessingException {
         ModuleEntity module = moduleRepository.findByModuleName(moduleName);
-        if(module==null) throw new ModuleDoesNotExistException("Module "+moduleName+" does not exist! Check naming and try again.");
+        if(module==null) throw new ModuleDoesNotExistException(moduleName);
         return jsonLoader.convertIntoJsonFile(module);
     }
 }
