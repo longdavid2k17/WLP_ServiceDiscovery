@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleEntity;
 import pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleRegistrationService;
 import pl.com.kantoch.WLP_ServiceDiscovery.payloads.RegisterModuleRequest;
+import pl.com.kantoch.WLP_ServiceDiscovery.service.ServiceDiscoveryModuleRegistration;
 
 import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_DISCOVERY_MODULE_NAME;
 
@@ -14,9 +15,11 @@ import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_D
 public class ModuleRegistrationResource {
 
     private final ModuleRegistrationService moduleRegistrationService;
+    private final ServiceDiscoveryModuleRegistration serviceDiscoveryModuleRegistration;
 
-    public ModuleRegistrationResource(ModuleRegistrationService moduleRegistrationService) {
+    public ModuleRegistrationResource(ModuleRegistrationService moduleRegistrationService, ServiceDiscoveryModuleRegistration serviceDiscoveryModuleRegistration) {
         this.moduleRegistrationService = moduleRegistrationService;
+        this.serviceDiscoveryModuleRegistration = serviceDiscoveryModuleRegistration;
     }
 
     @GetMapping
@@ -36,7 +39,7 @@ public class ModuleRegistrationResource {
     @PutMapping
     @ApiOperation(value = "Force module registration")
     public void forceRegistration() {
-        moduleRegistrationService.registerServiceDiscoveryModule();
+        serviceDiscoveryModuleRegistration.registerServiceDiscoveryModule();
     }
 
     @PostMapping
