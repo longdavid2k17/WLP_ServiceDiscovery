@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class NetworkConfigurationServiceTest {
-    //private NetworkConfigurationService networkConfigurationService = Mockito.mock(NetworkConfigurationService.class);
+
     @Autowired
     private NetworkConfigurationService networkConfigurationService;
 
