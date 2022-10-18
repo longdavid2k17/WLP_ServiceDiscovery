@@ -29,6 +29,7 @@
 		<springdoc.version>1.6.4</springdoc.version>
 		<maven-tool.version>3.8.5</maven-tool.version>
 		<junit.version>4.13.2</junit.version>
+		<rest-assured.version>5.2.0</rest-assured.version>
 	</properties>
 	<dependencies>
 		<!-- BASIC DEPENDENCIES -->
@@ -67,6 +68,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 

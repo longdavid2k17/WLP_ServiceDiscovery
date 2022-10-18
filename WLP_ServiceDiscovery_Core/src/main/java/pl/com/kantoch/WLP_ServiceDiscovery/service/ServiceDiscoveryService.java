@@ -19,6 +19,7 @@ public class ServiceDiscoveryService {
             if(response.statusCode()==200 || response.statusCode()==302) return SERVICE_STATUS.RUNNING.name();
             else return SERVICE_STATUS.DOWN.name();
         } catch (IOException | InterruptedException e) {
+            LOGGER.warn("Could not connect to {}",swaggerUrl);
             return SERVICE_STATUS.DOWN.name();
         }
     }
