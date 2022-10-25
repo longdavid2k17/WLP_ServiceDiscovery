@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>WLP_ServiceDiscovery_API</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-FINAL</version>
     <name>WLP_ServiceDiscovery_API</name>
 
     <properties>
