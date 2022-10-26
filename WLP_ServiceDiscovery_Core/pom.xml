@@ -9,4 +9,5 @@
     <artifactId>WLP_ServiceDiscovery_Core</artifactId>
     <name>WLP_ServiceDiscovery_Core</name>
     <url>http://maven.apache.org</url>
+    <version>0.0.2-FINAL</version>
 </project>
