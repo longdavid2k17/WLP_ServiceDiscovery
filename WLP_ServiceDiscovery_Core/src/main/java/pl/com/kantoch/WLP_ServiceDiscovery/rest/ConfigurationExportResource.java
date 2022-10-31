@@ -8,10 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.kantoch.WLP_ServiceDiscovery.service.ConfigurationExportService;
 
 import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.EXPORTED_MODULE_CONFIGURATION_FILE_NAME;
@@ -19,6 +16,7 @@ import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_D
 
 @RestController
 @RequestMapping("/api/configuration")
+@CrossOrigin("*")
 public class ConfigurationExportResource {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ConfigurationExportResource.class);

@@ -12,6 +12,7 @@ import static pl.com.kantoch.WLP_ServiceDiscovery.tools.NameDictionary.SERVICE_D
 
 @RestController
 @RequestMapping("/api/module-registration")
+@CrossOrigin("*")
 public class ModuleRegistrationResource {
 
     private final ModuleRegistrationService moduleRegistrationService;

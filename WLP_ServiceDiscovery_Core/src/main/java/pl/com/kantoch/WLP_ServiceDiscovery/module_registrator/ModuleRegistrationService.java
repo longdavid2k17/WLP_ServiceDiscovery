@@ -9,6 +9,7 @@ import pl.com.kantoch.WLP_ServiceDiscovery.service.ServiceDiscoveryService;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -38,6 +39,14 @@ public class ModuleRegistrationService {
         moduleEntityCollection.forEach(e->e.setSwaggerUrl(e.buildSwaggerUrl()));
         moduleEntityCollection.forEach(e->e.setStatus(serviceDiscoveryService.getServiceStatus(e.getSwaggerUrl())));
         return moduleEntityCollection;
+    }
+
+    public ModuleEntity getRegisteredModule(String moduleName) {
+        ModuleEntity module = getModule(moduleName);
+        if(module==null) return null;
+        module.setSwaggerUrl(module.buildSwaggerUrl());
+        module.setStatus(serviceDiscoveryService.getServiceStatus(module.getSwaggerUrl()));
+        return module;
     }
 
     @Transactional
@@ -80,5 +89,13 @@ public class ModuleRegistrationService {
     @Transactional
     public void delete(ModuleEntity entity) {
         moduleRepository.delete(entity);
+    }
+
+    public Collection<ModuleEntity> getRegisteredModulesFiltered(String moduleName) {
+        Collection<ModuleEntity> moduleEntities = getRegisteredModules();
+        return moduleEntities
+                .stream()
+                .filter(e->e.getModuleName().toLowerCase().contains(moduleName.toLowerCase()))
+                .collect(Collectors.toUnmodifiableList());
     }
 }
