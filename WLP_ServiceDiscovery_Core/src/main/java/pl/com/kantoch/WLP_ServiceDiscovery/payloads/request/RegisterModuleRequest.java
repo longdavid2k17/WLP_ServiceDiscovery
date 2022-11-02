@@ -1,4 +1,4 @@
-package pl.com.kantoch.WLP_ServiceDiscovery.payloads;
+package pl.com.kantoch.WLP_ServiceDiscovery.payloads.request;
 
 public class RegisterModuleRequest {
     private String moduleName;
