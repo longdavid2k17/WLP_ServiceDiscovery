@@ -1,10 +1,13 @@
-package pl.com.kantoch.WLP_ServiceDiscovery.payloads.response;
+package response;
 
 public class LogFileContentResponse {
     private String content;
 
     public LogFileContentResponse(String content) {
         this.content = content;
+    }
+
+    public LogFileContentResponse() {
     }
 
     public String getContent() {

@@ -1,9 +1,10 @@
 package pl.com.kantoch.WLP_ServiceDiscovery.rest;
 
+import logs.LogService;
 import org.springframework.web.bind.annotation.*;
-import pl.com.kantoch.WLP_ServiceDiscovery.payloads.response.LogFileContentResponse;
-import pl.com.kantoch.WLP_ServiceDiscovery.service.LogService;
+import response.LogFileContentResponse;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @RestController
@@ -18,12 +19,14 @@ public class LogsResource {
     }
 
     @GetMapping("/get-all")
-    public Collection<String> listLogFiles(){
-        return logService.listLogFiles();
+    public Collection<String> listLogFiles(@RequestParam String moduleName)
+            throws IOException, InterruptedException {
+        return logService.listLogFiles(moduleName);
     }
 
     @GetMapping("/read-file")
-    public LogFileContentResponse readLogFile(@RequestParam String fileName){
-        return logService.readLogFile(fileName);
+    public LogFileContentResponse readLogFile(@RequestParam String moduleName,@RequestParam String fileName)
+            throws IOException, InterruptedException {
+        return logService.readLogFile(moduleName,fileName);
     }
 }

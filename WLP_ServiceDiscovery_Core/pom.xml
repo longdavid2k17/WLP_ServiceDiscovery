@@ -10,4 +10,14 @@
     <name>WLP_ServiceDiscovery_Core</name>
     <url>http://maven.apache.org</url>
     <version>0.0.2-FINAL</version>
+    <properties>
+        <service_discovery_api.version>0.0.2-FINAL</service_discovery_api.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>pl.com.kantoch</groupId>
+            <artifactId>WLP_ServiceDiscovery_API</artifactId>
+            <version>${service_discovery_api.version}</version>
+        </dependency>
+    </dependencies>
 </project>
