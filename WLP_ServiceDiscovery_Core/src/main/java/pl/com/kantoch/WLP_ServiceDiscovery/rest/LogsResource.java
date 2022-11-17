@@ -3,6 +3,7 @@ package pl.com.kantoch.WLP_ServiceDiscovery.rest;
 import logs.LogService;
 import org.springframework.web.bind.annotation.*;
 import response.LogFileContentResponse;
+import response.LogWrapperEntity;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,6 +17,11 @@ public class LogsResource {
 
     public LogsResource(LogService logService) {
         this.logService = logService;
+    }
+
+    @GetMapping("/wrapper")
+    public Collection<LogWrapperEntity> getWrapper(){
+        return logService.getLogWrapper();
     }
 
     @GetMapping("/get-all")

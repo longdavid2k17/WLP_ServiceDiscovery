@@ -10,10 +10,12 @@ import pl.com.kantoch.WLP_ServiceDiscovery.module_registrator.ModuleRepository;
 import pl.com.kantoch.files.FileOperationServiceImplementation;
 import pl.com.kantoch.requests.HttpRequests;
 import response.LogFileContentResponse;
+import response.LogWrapperEntity;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,21 @@ public class LogServiceImplementation implements LogService {
     public LogServiceImplementation(ModuleRepository moduleRepository) {
         this.moduleRepository = moduleRepository;
         this.fileOperationService = new FileOperationServiceImplementation();
+    }
+
+    @Override
+    public Collection<LogWrapperEntity> getLogWrapper() {
+        Collection<ModuleEntity> modules = moduleRepository.findAll();
+        Collection<LogWrapperEntity> logWrapper = new ArrayList<>();
+        modules.forEach(e->{
+            try {
+                Collection<String> logFiles = listLogFiles(e.getModuleName());
+                logWrapper.add(new LogWrapperEntity(e.getModuleName(),logFiles));
+            } catch (IOException | InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        return logWrapper;
     }
 
     public Collection<String> listLogFiles(String moduleName) throws IOException, InterruptedException {
